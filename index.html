@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nesquik City | Ваш город в блоковом стиле</title>
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --secondary: #FF5722;
+            --dark: #212121;
+            --light: #FAFAFA;
+            --gray: #757575;
+            --minecraft-green: #55AA55;
+            --minecraft-dark: #3F3F3F;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--minecraft-dark) 0%, var(--dark) 100%);
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 4px solid var(--minecraft-green);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="50" height="50" fill="%23388E3C" opacity="0.1"/></svg>');
+            background-size: 50px;
+            z-index: 0;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 3px 3px 0 var(--minecraft-dark);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--minecraft-green);
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: var(--minecraft-dark);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .nav-item {
+            margin: 0 1rem;
+            padding: 0.5rem 1rem;
+            color: var(--light);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .nav-item:hover {
+            background-color: var(--minecraft-green);
+            transform: translateY(-2px);
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--minecraft-green);
+            display: inline-block;
+        }
+        
+        /* Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: var(--minecraft-dark);
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .gallery-caption {
+            padding: 1rem;
+            background-color: var(--minecraft-dark);
+        }
+        
+        /* About Section */
+        .about {
+            background-color: rgba(63, 63, 63, 0.5);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 3rem 0;
+            border-left: 4px solid var(--minecraft-green);
+        }
+        
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, var(--minecraft-dark) 0%, var(--dark) 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            border-top: 3px solid var(--minecraft-green);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--minecraft-green);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--minecraft-dark);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+            border-top: 4px solid var(--minecraft-green);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--dark);
+            border-radius: 50%;
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: var(--minecraft-green);
+            transform: scale(1.1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-item {
+                margin: 0.5rem 0;
+                width: 80%;
+                text-align: center;
+            }
+        }
+        
+        /* Minecraft-style buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--minecraft-green);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 0 var(--primary-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 var(--primary-dark);
+        }
+        
+        /* Minecraft block animation */
+        @keyframes blockAppear {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .block-animation {
+            animation: blockAppear 0.5s ease forwards;
+        }
+        
+        /* Loading animation */
+        .loader {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+        }
+        
+        .loader:after {
+            content: " ";
+            display: block;
+            width: 64px;
+            height: 64px;
+            margin: 8px;
+            border-radius: 50%;
+            border: 6px solid var(--minecraft-green);
+            border-color: var(--minecraft-green) transparent var(--minecraft-green) transparent;
+            animation: loader 1.2s linear infinite;
+        }
+        
+        @keyframes loader {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Nesquik City</h1>
+            <p class="subtitle">Исследуйте удивительный город, созданный в Minecraft</p>
+            <a href="#gallery" class="btn">Смотреть галерею</a>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <a href="#about" class="nav-item">О городе</a>
+            <a href="#gallery" class="nav-item">Галерея</a>
+            <a href="#stats" class="nav-item">Статистика</a>
+            <a href="#visit" class="nav-item">Как посетить</a>
+        </div>
+    </nav>
+    
+    <main class="container">
+        <section id="about">
+            <h2 class="section-title">О нашем городе</h2>
+            <div class="about">
+                <p>Добро пожаловать в самый впечатляющий город, созданный в Minecraft! Наш проект объединил сотни строителей, которые работали над созданием уникальных зданий, парков, инфраструктуры и достопримечательностей.</p>
+                <p>Город включает в себя современные небоскребы, исторические кварталы, развлекательные центры. Каждое здание тщательно проработано и имеет уникальный дизайн.</p>
+                <p>Присоединяйтесь к нашему сообществу и станьте частью этого удивительного проекта!</p>
+            </div>
+        </section>
+        
+        <section id="gallery">
+            <h2 class="section-title">Галерея города</h2>
+            <p>Здесь вы можете увидеть лучшие скриншоты нашего города. Для добавления своих изображений просто загрузите их в папку с HTML-файлом.</p>
+            
+            <div class="gallery">
+                <!-- Пример изображений - замените на свои -->
+                <div class="gallery-item block-animation">
+                    <img src="https://i.yapx.ru/cPdJk.png" alt="Центральная площадь" class="gallery-img">
+                    <div class="gallery-caption">
+                        <h3>Центральная площадь</h3>
+                        <p>Сердце нашего города с фонтаном и скульптурами</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item block-animation">
+                    <img src="https://i.yapx.ru/cPdKR.png" alt="Бизнес-квартал" class="gallery-img">
+                    <div class="gallery-caption">
+                        <h3>Бизнес-квартал</h3>
+                        <p>Современные небоскребы и офисные центры</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item block-animation">
+                    <img src="https://i.yapx.ru/cPdLD.png" alt="Жилой район" class="gallery-img">
+                    <div class="gallery-caption">
+                        <h3>Жилой район</h3>
+                        <p>Уютные дома и зеленые зоны для жителей</p>
+                    </div>
+                </div>
+                
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="stats">
+            <h2 class="section-title">Статистика города</h2>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">5+</div>
+                    <p>Уникальных зданий</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">5+</div>
+                    <p>Активных жителей</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">20+</div>
+                    <p>Километров дорог</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">2</div>
+                    <p>Районов города</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="visit">
+            <h2 class="section-title">Как посетить наш город</h2>
+            <div class="about">
+                <p>Хотите исследовать наш город лично? Присоединяйтесь к нашему миру Minecraft на PlayStation 3!</p>
+                <p><strong>Nick Playstation Network : force5333ps</strong></p>
+                <p><strong>Версия Minecraft:</strong> 1.19+</p>
+
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>Nesquik City Project © 2025</p>
+        <div class="social-links">
+        </div>
+        <p></p>
+    </footer>
+
+    <script>
+        // Простая анимация появления элементов при прокрутке
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedItems = document.querySelectorAll('.block-animation');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'blockAppear 0.5s ease forwards';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animatedItems.forEach(item => {
+                observer.observe(item);
+            });
+            
+            // Плавная прокрутка для навигации
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
